@@ -23,8 +23,9 @@ public:
 	Zombie();
 	void announce(void) const;
 	const Zombie &setName(string p_name);
+	string getName() const;
+	const Zombie &retire();
 };
 
-void randomChump(string name);
-Zombie *newZombie(string name);
+Zombie* zombieHorde(int N, string name);
 #endif

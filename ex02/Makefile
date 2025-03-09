@@ -1,30 +1,23 @@
 COMPILER = c++
-NAME_TARGET = zombies
+NAME_TARGET = brain
 COMPILE_FLAGS = -Wall -Wextra -Werror -g -c -std=c++98
 LINK_FLAGS = 
 PREFIX = 
 
-SRC_NAMES = \
-	Zombie.cpp \
-	newZombie.cpp \
-	randomChump.cpp
-
 ENDPOINT_NAMES = main.cpp
-
-SRC_OBJS = $(SRC_NAMES:.cpp=.o)
 
 ENDPOINT_OBJS = $(ENDPOINT_NAMES:.cpp=.o)
 
 all: $(NAME_TARGET)
 
-$(NAME_TARGET): $(SRC_OBJS) $(ENDPOINT_OBJS)
+$(NAME_TARGET): $(ENDPOINT_OBJS)
 	$(PREFIX)$(COMPILER) $(SRC_OBJS) $(ENDPOINT_OBJS) -o $(NAME_TARGET) $(LINK_FLAGS)
 
 %.o: %.cpp
 	$(PREFIX)$(COMPILER) $(COMPILE_FLAGS) $< -o $@ $(INCLUDES) $(PREPROC_DEFINES)
 
 clean:
-	$(PREFIX)rm -f $(SRC_OBJS) $(ENDPOINT_OBJS)
+	$(PREFIX)rm -f $(ENDPOINT_OBJS)
 
 fclean: clean
 	$(PREFIX)rm -f $(NAME_TARGET)

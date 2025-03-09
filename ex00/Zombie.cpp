@@ -18,7 +18,7 @@ Zombie &Zombie::operator=(const Zombie &other) {
 }
 
 Zombie::~Zombie() {
-	cout << name << ": <dies>";
+	cout << name << ": <dies>" << endl;
 }
 
 Zombie::Zombie(string p_name)
@@ -26,7 +26,7 @@ Zombie::Zombie(string p_name)
 {
 }
 
-void Zombie::announce(void) {
+void Zombie::announce(void) const {
 	cout << name << ": BraiiiiiiinnnzzzZ..." << endl;
 }
 

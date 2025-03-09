@@ -6,8 +6,7 @@ PREFIX =
 
 SRC_NAMES = \
 	Zombie.cpp \
-	newZombie.cpp \
-	randomChump.cpp
+	zombieHorde.cpp
 
 ENDPOINT_NAMES = main.cpp
 
