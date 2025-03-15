@@ -56,7 +56,7 @@ int main() {
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "bac", "www", "aba\ncaba\ndaba\ncaba\n", 0, 0) // no match because of \n
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "ba\\nc", "www", "awwwaba\ndawwwaba\n", 0, 0) // \n in the middle
 		, TestCase("aba\ncaba\ndaba\ncaba", "ba\\n", "www", "awwwcawwwdawwwcaba", 0, 0) // \n in the end of token
-		, TestCase("a\nb\na\nc\na\nb\na\nd\na\nb\na\nc\na\nb\na\n", "\nb\na\n", "w", "awc\nawd\nawc\naw", 0, 0) // multiple \ns in the token
+		, TestCase("a\nb\na\nc\na\nb\na\nd\na\nb\na\nc\na\nb\na\n", "\\nb\\na\\n", "w", "awc\nawd\nawc\naw", 0, 0) // multiple \ns in the token
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::NO_INPUT_FILE, 2)
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::NO_ARGS, 1)
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::ONE_ARG, 1)

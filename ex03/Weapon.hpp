@@ -9,9 +9,9 @@ class Weapon {
 private:
 	string type;
 	Weapon();
-	Weapon(const Weapon &other);
 	Weapon &operator=(const Weapon &other);
 public:
+	Weapon(const Weapon &other);
 	const string& getType() const;
 	Weapon& setType(string nType);
 	~Weapon();

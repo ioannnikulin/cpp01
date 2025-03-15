@@ -55,7 +55,7 @@ const Zombie& Zombie::retire() {
 		, "gone to meet its maker "
 		, "stiff "
 		, "pushing up the daisies "
-		, "kicked the bucket"
+		, "kicked the bucket "
 		, "shuffled off the mortal coil "
 		, "run down the curtain "
 	};

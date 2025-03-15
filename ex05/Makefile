@@ -25,4 +25,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME)
+
+.PHONY: all clean fclean re test

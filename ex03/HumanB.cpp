@@ -30,7 +30,10 @@ Weapon* HumanB::getWeapon() const {
 	return (weapon);
 }
 
-HumanB::HumanB(string nName, Weapon nWeapon) : name(nName), weapon(&nWeapon) {
+HumanB::HumanB(string nName, Weapon nWeapon) : name(nName) {
+	// impossible: we can't manage weapon memory
+	(void)nName;
+	(void)nWeapon;
 }
 
 HumanB::HumanB(string nName) : name(nName), weapon(nullptr) {
@@ -47,4 +50,7 @@ void HumanB::attack() const {
 		return ;
 	}
 	cout << getName() << " attacks with their " << getWeapon()->getType() << endl; 
+}
+
+HumanB::~HumanB() {
 }

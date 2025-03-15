@@ -13,15 +13,16 @@ private:
 	Weapon* weapon;
 	HumanB();
 	HumanB(const HumanB& other);
+	HumanB(string nName, Weapon nWeapon);
 	HumanB& operator=(const HumanB& other);
 	HumanB& setName(string nName);
 	const string& getName() const;
 	Weapon* getWeapon() const;
 public:
-	HumanB(string nName, Weapon nWeapon);
 	HumanB(string nName);
 	HumanB& setWeapon(Weapon& nWeapon);
 	void attack() const;
+	~HumanB();
 };
 
 #endif

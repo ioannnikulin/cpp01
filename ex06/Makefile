@@ -25,4 +25,17 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test: $(NAME)
+	-valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) 
+	@echo "\n\n"
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) "DEBUG"
+	@echo "\n\n"
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) "INFO"
+	@echo "\n\n"
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) "WARNING"
+	@echo "\n\n"
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) "ERROR"
+	@echo "\n\n"
+	valgrind --leak-check=full --show-leak-kinds=all -s -q ./$(NAME) "warning"
+
+.PHONY: all clean fclean re test
