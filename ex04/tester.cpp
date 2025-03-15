@@ -39,8 +39,9 @@ TestCase::~TestCase() {
 #define DEBUG
 
 int main() {
-	// every out file will end with \n, whether incoming file ends with \n or not
-	// this is better than managing files symbol-by-symbol, as subject says NOT to do this
+	// \n in the end are not necessarily preserved
+	// just end your files with \n please
+	// otherwise I'd have to manage files byte-by-byte, which the subject discourages from
 	TestCase tests[SZ] = {
 		TestCase("abacabadabacaba", "aba", "bab", "babcbabdbabcbab", 0, 0)
 		, TestCase("abacabadabacaba", "aba", "e", "ecedece", 0, 0) // shorter
@@ -49,13 +50,13 @@ int main() {
 		, TestCase("abacabadabacaba\n", "e", "aba", "abacabadabacaba\n", 0, 0) // no match
 		, TestCase("abacabadabacaba\n\n", "", "aba", "abacabadabacaba\n\n", 0, 0) // replace empty (do nothing)
 		, TestCase("abacaba\ndabacaba", "", "aba", "abacaba\ndabacaba", 0, 0) // replace empty (do nothing)
-		, TestCase("abacabadabacaba", "", "", "abacabadabacaba", 0, 0) // empty to empty
+		, TestCase("abacabadabacaba\n", "", "", "abacabadabacaba\n", 0, 0) // empty to empty
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "\\n", "q", "abaqcabaqdabaqcabaq", 0, 0) // \n to regular
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "\\n", "", "abacabadabacaba", 0, 0) // delete \ns
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "bac", "www", "aba\ncaba\ndaba\ncaba\n", 0, 0) // no match because of \n
 		, TestCase("aba\ncaba\ndaba\ncaba\n", "ba\\nc", "www", "awwwaba\ndawwwaba\n", 0, 0) // \n in the middle
 		, TestCase("aba\ncaba\ndaba\ncaba", "ba\\n", "www", "awwwcawwwdawwwcaba", 0, 0) // \n in the end of token
-		, TestCase("a\nb\na\nc\na\nb\na\nd\na\nb\na\nc\na\nb\na\n", "\nb\na\n", "w", "awc\nawd\nawc\naw\n", 0, 0) // multiple \ns in the token
+		, TestCase("a\nb\na\nc\na\nb\na\nd\na\nb\na\nc\na\nb\na\n", "\nb\na\n", "w", "awc\nawd\nawc\naw", 0, 0) // multiple \ns in the token
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::NO_INPUT_FILE, 2)
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::NO_ARGS, 1)
 		, TestCase("abacabadabacaba", "aba", "bab", "", TestCase::ONE_ARG, 1)

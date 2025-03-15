@@ -19,29 +19,6 @@ int usage(int ret) {
 	return (ret);
 }
 
-int simple(ifstream& ifs, ofstream& ofs, string what, string with) {
-	string curline;
-	while (getline(ifs, curline)) {
-		size_t lastEnd = 0;
-		while (lastEnd != string::npos) {
-			size_t thisStart = curline.find(what, lastEnd);
-			ofs << curline.substr(lastEnd, thisStart - lastEnd);
-			if (thisStart != string::npos) {
-				ofs << with;
-			}
-			lastEnd = 
-				thisStart == string::npos 
-				|| curline.length() - thisStart < what.length() 
-				? string::npos 
-				: thisStart + what.length();
-		}
-		if (ifs.peek() != EOF) {
-			ofs << "\n";
-		}
-	}
-	return (0);
-}
-
 int buffered(ifstream& ifs, ofstream& ofs, string what, string with) {
 	string curline = "";
 	string rdbuffer;
@@ -71,9 +48,6 @@ int buffered(ifstream& ifs, ofstream& ofs, string what, string with) {
 		}
 	}
 	ofs << curline;
-	if (curline.size() && curline.at(curline.size() - 1) != '\n') {
-		ofs << "\n";
-	}
 	return (0);
 }
 
@@ -89,9 +63,6 @@ int go(ifstream& ifs, ofstream& ofs, string what, string with) {
 		}
 		return (0);
 	}
-	/*if (string::npos == what.find("\n")) {
-		return (simple(ifs, ofs, what, with));
-	}*/
 	return (buffered(ifs, ofs, what, with));
 }
 
