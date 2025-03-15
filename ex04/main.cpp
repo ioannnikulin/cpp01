@@ -8,8 +8,6 @@ using std::ofstream;
 using std::stringstream;
 using std::endl;
 using std::cout;
-using std::clog;
-using std::cerr;
 
 int usage(int ret) {
 	cout << "Usage: ./notsed <infile> <what> <with>\n"
@@ -26,14 +24,10 @@ int simple(ifstream& ifs, ofstream& ofs, string what, string with) {
 	while (getline(ifs, curline)) {
 		size_t lastEnd = 0;
 		while (lastEnd != string::npos) {
-			clog << "searching from " << lastEnd << endl;
 			size_t thisStart = curline.find(what, lastEnd);
-			clog << "found at " << thisStart << endl;
 			ofs << curline.substr(lastEnd, thisStart - lastEnd);
-			clog << "[" << curline.substr(lastEnd, thisStart - lastEnd) << "]" << endl;
 			if (thisStart != string::npos) {
 				ofs << with;
-				clog << "[" << with << "]" << endl;
 			}
 			lastEnd = 
 				thisStart == string::npos 
@@ -43,7 +37,6 @@ int simple(ifstream& ifs, ofstream& ofs, string what, string with) {
 		}
 		if (ifs.peek() != EOF) {
 			ofs << "\n";
-			clog << "{\n}" << endl;
 		}
 	}
 	return (0);
@@ -57,31 +50,29 @@ int buffered(ifstream& ifs, ofstream& ofs, string what, string with) {
 		if (ifs.peek() != EOF) {
 			curline += "\n";
 		}
-		clog << "buffer: [" << curline << "]" << endl;
 		size_t lastEnd = 0;
 		bool enough = false;
 		size_t thisStart;
 		while (!enough) {
-			clog << "searching from " << lastEnd << endl;
 			thisStart = curline.find(what, lastEnd);
-			clog << "found at " << thisStart << endl;
 			if (thisStart != string::npos) {
 				ofs << curline.substr(lastEnd, thisStart - lastEnd);
-				clog << "[" << curline.substr(lastEnd, thisStart - lastEnd) << "]" << endl;
 				ofs << with;
-				clog << "[" << with << "]" << endl;
 				lastEnd = thisStart + what.length();
 			}
 			enough = 
 				thisStart == string::npos 
 				|| curline.length() - thisStart < what.length();
 		}
+		curline = curline.substr(lastEnd, curline.size());
 		if (what.size() < curline.size()) {
-			ofs << curline.substr(lastEnd, curline.size() - lastEnd - what.size());
-			clog << "finally [" << curline.substr(lastEnd, curline.size() - lastEnd - what.size() + 1) << "]" << endl;
-			curline = curline.substr(curline.size() - what.size() + 1, curline.size());
+			ofs << curline.substr(0, curline.size() - what.size());
+			curline = curline.substr(curline.size() - what.size(), curline.size());
 		}
-		clog << "buffer: [" << curline << "]" << endl;
+	}
+	ofs << curline;
+	if (curline.size() && curline.at(curline.size() - 1) != '\n') {
+		ofs << "\n";
 	}
 	return (0);
 }
@@ -94,14 +85,13 @@ int go(ifstream& ifs, ofstream& ofs, string what, string with) {
 			ofs << curline;
 			if (ifs.peek() != EOF) {
 				ofs << "\n";
-				clog << "{\n}" << endl;
 			}
 		}
 		return (0);
 	}
-	if (string::npos == what.find("\n")) {
+	/*if (string::npos == what.find("\n")) {
 		return (simple(ifs, ofs, what, with));
-	}
+	}*/
 	return (buffered(ifs, ofs, what, with));
 }
 

@@ -12,6 +12,7 @@ struct TestCase {
 	string _with;
 	string _exp;
 	int _flags;
+	int _expRet;
 
 	TestCase(
 		string input
@@ -19,6 +20,7 @@ struct TestCase {
 		, string with
 		, string exp
 		, int flags
+		, int expRet
 	);
 	~TestCase();
 	static const int NO_INPUT_FILE = 1;
